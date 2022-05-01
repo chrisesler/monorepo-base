@@ -1,0 +1,185 @@
+@use '@angular/material' as mat;
+@use './material-theme-creator' as ngx-mtc;
+
+@use './themes/light';
+@use './themes/dark';
+@use './components';
+@use './typography/config' as typography;
+
+@use './features';
+
+// new theme
+@use './themes/default';
+
+@use './css-variables';
+
+@mixin initialize-material() {
+
+    $typography-config: default.typography-config();
+
+    @include mat.core($typography-config);
+    @include mat.all-component-typographies($typography-config);
+    @include light-theme-init();
+}
+
+@mixin light-theme-init() {
+
+    $theme: default.light-theme-map();
+    $variants: default.light-theme-variant-map();
+    $typography: default.typography-config();
+
+    @include mat.core-theme($theme);
+    @include mat.all-component-themes($theme);
+
+    @include components.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+
+    @include features.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+}
+
+@mixin dark-theme-init() {
+
+    $theme: default.dark-theme-map();
+    $variants: default.dark-theme-variant-map();
+    $typography: default.typography-config();
+
+    @include mat.core-theme($theme);
+    @include mat.all-component-themes($theme);
+
+    @include components.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+
+    @include features.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+}
+
+@mixin initialize-material-vars() {
+
+    // css variable palettes
+    $theme: css-variables.palette-theme();
+    $variants: css-variables.palette-variants();
+    $typography: default.typography-config();
+
+    // default setup
+    @include mat.core($typography);
+    @include mat.all-component-typographies($typography);
+
+    // variables
+    @include default.light-theme();
+
+    // material
+    @include mat.core-theme($theme);
+    @include mat.all-component-themes($theme);
+
+    // custom
+    @include components.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+
+    @include features.theme(
+        $theme,
+        $typography,
+        $variants
+    );
+
+}
+
+// NOTE: Don't remove just yet... use for reference of working order
+@mixin initialize-material-vars-OLD() {
+    //@use '@angular/material' as mat;
+    //@use "@cesler/ui/themes/material-theme-creator" as ngx-mtc;
+
+    @include mat.core(typography.$my-app-typography);
+    @include mat.all-component-typographies(typography.$my-app-typography);
+
+    $primary-map: ngx-mtc.create-theme-map('primary');
+    $accent-map: ngx-mtc.create-theme-map('accent');
+    $warn-map: ngx-mtc.create-theme-map('warn');
+
+    :root {
+        --is-dark-theme: 0; // Is dark theme? 1 or 0;
+        @include ngx-mtc.theme-base(); // Creates base colors
+
+        // Creates theme colors
+        //@include ngx-mtc.create-variables-from-color('primary', #009688, 38%); // can update
+        //@include ngx-mtc.create-variables-from-color('accent', #2196f3, 57%); // can update
+        @include ngx-mtc.create-variables-from-map(
+            'primary',
+            mat.$indigo-palette
+        ); // can not update this theme
+        @include ngx-mtc.create-variables-from-map(
+            'accent',
+            mat.$pink-palette
+        ); // can not update this theme
+        @include ngx-mtc.create-variables-from-map(
+            'warn',
+            mat.$red-palette
+        ); // can not update this theme
+    }
+
+    $primary-palette: mat.define-palette($primary-map);
+    $accent-palette: mat.define-palette($accent-map, A200, A100, A400);
+    $warn-palette: mat.define-palette($warn-map);
+
+    // Custom theme
+    $theme: ngx-mtc.custom-theme(
+        $primary-palette,
+        $accent-palette,
+        $warn-palette
+    );
+
+    // Creates Angular Material Theme
+    @include mat.all-component-themes($theme);
+
+    // variants
+    $success-map: ngx-mtc.create-theme-map('success');
+    $info-map: ngx-mtc.create-theme-map('info');
+
+    :root {
+        @include ngx-mtc.create-variables-from-map(
+            'success',
+            mat.$green-palette
+        ); // can update
+        @include ngx-mtc.create-variables-from-map(
+            'info',
+            mat.$blue-palette
+        ); // can not update this theme
+    }
+
+    $light-success: mat.define-palette($success-map);
+    $light-info: mat.define-palette($info-map);
+
+    $light-variants: (
+        success: $light-success,
+        info: $light-info,
+    );
+
+    @include components.theme(
+        $theme,
+        typography.$my-app-typography,
+        $light-variants
+    );
+
+    @include features.theme(
+        $theme,
+        typography.$my-app-typography,
+        $light-variants
+    );
+}
+
+

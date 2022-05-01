@@ -1,0 +1,7 @@
+@use './lazy/lazy.theme' as lazy;
+@use './shared/shared.theme' as shared;
+
+@mixin theme($theme, $typography-config, $variants) {
+    //@include lazy.theme($theme, $typography-config, $variants);
+    @include shared.theme($theme, $typography-config, $variants);
+}

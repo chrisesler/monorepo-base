@@ -1,0 +1,68 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use '@angular/material' as mat;
+@use '../material-theme-creator' as ngx-mtc;
+
+
+@function primary-keys() {
+    $primary-keys: (
+        'primary',
+        'accent',
+        'warn'
+    );
+
+    @return $primary-keys;
+}
+
+@function variant-keys() {
+    $variant-keys: (
+        'success',
+        'info'
+    );
+
+    @return $variant-keys;
+}
+
+@function palette-keys() {
+    $primary-keys: primary-keys();
+    $variant-keys: variant-keys();
+    $palette-keys: list.join($primary-keys, $variant-keys);
+
+    @return $palette-keys;
+}
+
+@function primaries() {
+    $primary-map: ();
+
+    @each $k in primary-keys() {
+        $key: '#{$k}';
+        $val: ngx-mtc.create-theme-map($key);
+        $primary-map: map.set($primary-map, $key, $val);
+    }
+
+    @return $primary-map;
+}
+
+@function variants() {
+    $variant-map: ();
+
+    @each $k in variant-keys() {
+        $key: '#{$k}';
+        $val: ngx-mtc.create-theme-map($key);
+        $variant-map: map.set($variant-map, $key, $val);
+    }
+
+    @return $variant-map;
+}
+
+// primaries
+//$primary-map: ngx-mtc.create-theme-map('primary');
+//$accent-map: ngx-mtc.create-theme-map('accent');
+//$warn-map: ngx-mtc.create-theme-map('warn');
+
+// variants
+// variants
+//$success-map: ngx-mtc.create-theme-map('success');
+//$info-map: ngx-mtc.create-theme-map('info');
+

@@ -1,0 +1,4 @@
+
+@mixin theme($theme, $typography-config, $variants) {
+    @include feature.theme($theme, $typography-config, $variants);
+}

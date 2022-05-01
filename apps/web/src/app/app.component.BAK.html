@@ -1,0 +1,188 @@
+<mat-toolbar color="primary">
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+    >
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="example-spacer"></span>
+    <button
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+    >
+        <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with share icon"
+    >
+        <mat-icon>share</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        (click)="toggleDarkTheme()"
+        class="theme-toggle"
+        aria-label="Toggle Dark Theme"
+    >
+        <mat-icon>{{ isDark ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+</mat-toolbar>
+<div>
+    <h1>Angular Material Theming System: Complete Guide</h1>
+
+    <div class="demo-buttons">
+        <button mat-raised-button color="primary">Raised</button>
+        <button mat-raised-button color="accent">Accent</button>
+        <button mat-raised-button color="warn">Warn</button>
+    </div>
+
+    <cesler-alert></cesler-alert>
+
+    <div class="demo-buttons">
+        <!-- success buttons -->
+
+        <button mat-button color="success">Success</button>
+        <button mat-stroked-button color="success">Success Stroked</button>
+        <button mat-flat-button color="success">Success Flat</button>
+        <button mat-raised-button color="success">Success Raised</button>
+        <button mat-icon-button color="success">
+            <mat-icon>check_circle</mat-icon>
+        </button>
+        <button mat-fab color="success">
+            <mat-icon>check_circle</mat-icon>
+        </button>
+        <button mat-mini-fab color="success">
+            <mat-icon>check_circle</mat-icon>
+        </button>
+    </div>
+
+    <div class="demo-buttons">
+        <!-- info buttons -->
+
+        <button mat-button color="info">Info</button>
+        <button mat-stroked-button color="info">Info Stroked</button>
+        <button mat-flat-button color="info">Info Flat</button>
+        <button mat-raised-button color="info">Info Raised</button>
+        <button mat-icon-button color="info">
+            <mat-icon>info</mat-icon>
+        </button>
+        <button mat-fab color="info">
+            <mat-icon>info</mat-icon>
+        </button>
+        <button mat-mini-fab color="info">
+            <mat-icon>info</mat-icon>
+        </button>
+    </div>
+</div>
+<div>
+    <h2>Autocomplete</h2>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Person</mat-label>
+        <input
+            type="text"
+            placeholder="Pick one"
+            aria-label="Person"
+            matInput
+            [matAutocomplete]="auto"
+        />
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option>Grace Hopper</mat-option>
+            <mat-option>Anita Borg</mat-option>
+            <mat-option>Ada Lovelace</mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <h2>Button</h2>
+
+    <button mat-button>go</button>
+    <button mat-icon-button><mat-icon>search</mat-icon></button>
+    <button mat-raised-button>go</button>
+    <button mat-fab><mat-icon>home</mat-icon></button>
+    <button mat-mini-fab><mat-icon>favorite</mat-icon></button>
+
+    <a mat-button href="https://google.com">Google</a>
+    <a mat-icon-button href="https://google.com"><mat-icon>search</mat-icon></a>
+    <a mat-raised-button href="https://google.com">Google</a>
+    <a mat-fab href="https://google.com"><mat-icon>home</mat-icon></a>
+    <a mat-mini-fab href="https://google.com"><mat-icon>favorite</mat-icon></a>
+
+    <h2>Button toggle</h2>
+
+    <h3>Single selection</h3>
+    <mat-button-toggle-group>
+        <mat-button-toggle>Ketchup</mat-button-toggle>
+        <mat-button-toggle>Mustard</mat-button-toggle>
+        <mat-button-toggle>Mayo</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Multi selection</h3>
+    <mat-button-toggle-group multiple>
+        <mat-button-toggle>Ketchup</mat-button-toggle>
+        <mat-button-toggle>Mustard</mat-button-toggle>
+        <mat-button-toggle>Mayo</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <h3>Standalone</h3>
+    <mat-button-toggle>Hyperspinner enabled</mat-button-toggle>
+
+    <h3>Card</h3>
+
+    <mat-card> Simple card </mat-card>
+
+    <mat-card>
+        <mat-card-title>Complicated card</mat-card-title>
+        <mat-card-subtitle>Subtitle</mat-card-subtitle>
+        <mat-card-content>
+            <p>This is some stuff</p>
+            <p>And more stuff</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+        </mat-card-actions>
+        <mat-card-footer> Hurray </mat-card-footer>
+    </mat-card>
+
+    <h2>Checkbox</h2>
+
+    <mat-checkbox>With a label</mat-checkbox>
+    <mat-checkbox></mat-checkbox>Without a label
+
+    <h2>Chips</h2>
+
+    <mat-chip-list>
+        <mat-chip>Barbeque Cheddar</mat-chip>
+        <mat-chip>Sea Salt and Vinegar</mat-chip>
+        <mat-chip>Manta Ray</mat-chip>
+    </mat-chip-list>
+
+    <mat-chip-list>
+        <mat-basic-chip>Tomato</mat-basic-chip>
+        <mat-basic-chip>Scallion</mat-basic-chip>
+        <mat-basic-chip>Cilantro</mat-basic-chip>
+    </mat-chip-list>
+
+    <h2>Datepicker</h2>
+
+    <mat-form-field>
+        <input
+            type="text"
+            matInput
+            [matDatepicker]="birthday"
+            placeholder="Birthday"
+        />
+        <mat-datepicker-toggle
+            matSuffix
+            [for]="birthday"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #birthday></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<cesler-test></cesler-test>
+<router-outlet></router-outlet>

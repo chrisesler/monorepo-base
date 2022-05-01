@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/feature/lazy/authentication",
+    "sourceRoot": "libs/feature/lazy/authentication/src",
+    "prefix": "cesler",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/feature/lazy/authentication"],
+            "options": {
+                "jestConfig": "libs/feature/lazy/authentication/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/feature/lazy/authentication/src/**/*.ts",
+                    "libs/feature/lazy/authentication/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": ["feature:lazy"]
+}

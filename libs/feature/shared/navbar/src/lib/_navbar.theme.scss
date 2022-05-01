@@ -1,0 +1,53 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@use '@cesler/ui/styles/utils';
+
+@mixin color($theme) {
+    // Get the color config from the theme.
+    $color-config: mat.get-color-config($theme);
+    //@include utils.debug-map($theme);
+
+    // Get the primary color palette from the color-config.
+    $primary-palette: map.get($color-config, 'primary');
+
+    .app-navbar {
+        color: mat.get-color-from-palette($primary-palette, default-contrast);
+
+        .app-navbar,
+        .app-navbar-header {
+            background: mat.get-color-from-palette($primary-palette);
+
+            & a:hover,
+            & a:focus {
+                background: rgba(0, 0, 0, 0.4);
+            }
+
+            .app-navbar-header-item-selected {
+                background: rgba(0, 0, 0, 0.2);
+            }
+        }
+    }
+}
+
+@mixin typography($typography-config) {
+    .alert {
+        .alert-heading {
+            @include mat.typography-level($typography-config, 'title');
+        }
+        .alert-footer {
+            @include mat.typography-level($typography-config, 'caption');
+        }
+    }
+}
+
+@mixin theme($theme, $typography-config, $variants) {
+    $color-config: mat.get-color-config($theme);
+    @if $color-config != null {
+        @include color($theme);
+    }
+
+    /*@if $typography-config != null {
+        @include typography($typography-config);
+    }*/
+}

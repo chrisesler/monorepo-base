@@ -1,0 +1,326 @@
+@use "core" as mtc;
+@use '@angular/material' as mat;
+
+/// @deprecated
+@mixin ngx-mtc-init() {
+  @include mtc.init();
+}
+
+/// Creates CSS Variables used in the "create-variables-from-color" mixin
+///
+/// @include ngx-mtc.init()
+///
+@mixin init() {
+  @include mtc.init();
+}
+
+/// @deprecated
+@function ngx-mtc-create-theme-map($theme-name) {
+  @return (
+          50: #{'var(--' + $theme-name + '-50, #eee)'},
+          100:#{'var(--' + $theme-name + '-100, #ddd)'},
+          200:#{'var(--' + $theme-name + '-200, #ccc)'},
+          300:#{'var(--' + $theme-name + '-300, #aaa)'},
+          400:#{'var(--' + $theme-name + '-400, #999)'},
+          500:#{'var(--' + $theme-name + '-500, #777)'},
+          600:#{'var(--' + $theme-name + '-600, #666)'},
+          700:#{'var(--' + $theme-name + '-700, #555)'},
+          800:#{'var(--' + $theme-name + '-800, #333)'},
+          900:#{'var(--' + $theme-name + '-900, #222)'},
+          A100:#{'var(--' + $theme-name + '-A100, #c00)'},
+          A200:#{'var(--' + $theme-name + '-A200, #900)'},
+          A400:#{'var(--' + $theme-name + '-A400, #700)'},
+          A700:#{'var(--' + $theme-name + '-A700, #500)'},
+          contrast: (
+                  50: #{'var(--' + $theme-name + '-50-contrast, 50%)'},
+                  200:#{'var(--' + $theme-name + '-200-contrast, 50%)'},
+                  300:#{'var(--' + $theme-name + '-300-contrast, 50%)'},
+                  100:#{'var(--' + $theme-name + '-100-contrast, 50%)'},
+                  400:#{'var(--' + $theme-name + '-400-contrast, 50%)'},
+                  500:#{'var(--' + $theme-name + '-500-contrast, 50%)'},
+                  600:#{'var(--' + $theme-name + '-600-contrast, 50%)'},
+                  700:#{'var(--' + $theme-name + '-700-contrast, 50%)'},
+                  800:#{'var(--' + $theme-name + '-800-contrast, 50%)'},
+                  900:#{'var(--' + $theme-name + '-900-contrast, 50%)'},
+                  A100:#{'var(--' + $theme-name + '-A100-contrast, 50%)'},
+                  A200:#{'var(--' + $theme-name + '-A200-contrast, 50%)'},
+                  A400:#{'var(--' + $theme-name + '-A400-contrast, 50%)'},
+                  A700:#{'var(--' + $theme-name + '-A700-contrast, 50%)'},
+          )
+  );
+}
+
+/// Creates a theme-map for use in Angular Material
+///
+/// $primary-map: ngx-mtc.create-theme-map('primary');
+///
+/// @param {string} $theme-name
+/// @return {mat-palette} palette with CSS Custom Properties
+@function create-theme-map($theme-name) {
+  @return ngx-mtc-create-theme-map($theme-name);
+}
+
+/// @deprecated
+@mixin ngx-mtc-create-variables-from-color($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc.create-variables-from-color($theme-name, $color, $contrast-threshold: 50%);
+}
+
+/// Creates CSS Custom Properties for mat-palette from one color
+///
+/// @include ngx-mtc.create-variables-from-color('primary', #009688, 38%);
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {color} $color CSS Color (#hex/rgb,hsl);
+/// @param {percent} $contrast-threshold: 0%..100% (default: 50%);
+///
+/// @return CSS Custom Properties:
+///  --primary: hsl(...);
+///  --primary-50: hsl(...);
+///  --primary-50-contrast: hsl(...);
+///  --primary-100: hsl(...);
+///  --primary-100-contrast: hsl(...);
+///  ...
+///  --primary-A700: hsl(...);
+///  --primary-A700-contrast: hsl(...);
+@mixin create-variables-from-color($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc.create-variables-from-color($theme-name, $color, $contrast-threshold);
+}
+
+/// @deprecated
+@mixin ngx-mtc-create-variables-from-map($theme-name, $theme-map) {
+  // color: var(--primary)
+  --#{$theme-name}: #{map-get($theme-map, 500)};
+
+  $arr_names: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700;
+  @for $i from 1 through 14 {
+    // color: var(--primary-300)
+    $index: nth($arr_names, $i);
+    --#{$theme-name}-#{$index}: #{map-get($theme-map, $index)};
+    --#{$theme-name}-#{$index}-contrast: #{map-get(map-get($theme-map, contrast), $index)};
+  }
+}
+
+/// Creates CSS Custom Properties for mat-palette from mat-palette
+///
+/// @include ngx-mtc.create-variables-from-map('warn', mat.$red-palette);
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {mat-palette} $theme-map: SASS Map (https://sass-lang.com/documentation/values/maps);
+/// You can use theme-map from ~@angular/material/core/theming/_palette (e.g. $red-palette or $pink-palette...)
+///
+/// Theme Map Example:
+///  (
+///     50: #ffebee,
+///    100: #ffcdd2,
+///    200: #ef9a9a,
+///    300: #e57373,
+///    400: #ef5350,
+///    500: #f44336,
+///    600: #e53935,
+///    700: #d32f2f,
+///    800: #c62828,
+///    900: #b71c1c,
+///    A100: #ff8a80,
+///    A200: #ff5252,
+///    A400: #ff1744,
+///    A700: #d50000,
+///    contrast: (
+///       50: #000,
+///      100: #000,
+///      200: #000,
+///      300: #000,
+///      400: #000,
+///      500: #fff,
+///      600: #fff,
+///      700: #fff,
+///      800: #fff,
+///      900: #fff,
+///      A100: #000,
+///      A200: #fff,
+///      A400: #fff,
+///      A700: #fff,
+///    )
+///  )
+///
+/// @return CSS Custom Properties:
+///  --primary: hsl(...);
+///  --primary-50: hsl(...);
+///  --primary-50-contrast: hsl(...);
+///  --primary-100: hsl(...);
+///  --primary-100-contrast: hsl(...);
+///  ...
+///  --primary-A700: hsl(...);
+///  --primary-A700-contrast: hsl(...);
+@mixin create-variables-from-map($theme-name, $theme-map) {
+  @include ngx-mtc-create-variables-from-map($theme-name, $theme-map);
+}
+
+@function _get-background-color($name) {
+  @return mtc.theme-color(map-get(mat.$light-theme-background-palette, $name), map-get(mat.$dark-theme-background-palette, $name))
+}
+
+@function _get-foreground-color($name) {
+  @return mtc.theme-color(map-get(mat.$light-theme-foreground-palette, $name), map-get(mat.$dark-theme-foreground-palette, $name))
+}
+
+/// @deprecated
+@mixin ngx-mtc-theme-base() {
+
+  --mtc-background-status-bar: #{_get-background-color('status-bar')};
+  --mtc-background-app-bar: #{_get-background-color('app-bar')};
+  --mtc-background-background: #{_get-background-color('background')};
+  --mtc-background-hover: #{_get-background-color('hover')};
+  --mtc-background-card: #{_get-background-color('card')};
+  --mtc-background-dialog: #{_get-background-color('dialog')};
+  --mtc-background-disabled-button: #{_get-background-color('disabled-button')};
+  --mtc-background-raised-button: #{_get-background-color('raised-button')};
+  --mtc-background-focused-button: #{_get-background-color('focused-button')};
+  --mtc-background-selected-button: #{_get-background-color('selected-button')};
+  --mtc-background-selected-disabled-button: #{_get-background-color('selected-disabled-button')};
+  --mtc-background-disabled-button-toggle: #{_get-background-color('disabled-button-toggle')};
+  --mtc-background-unselected-chip: #{_get-background-color('unselected-chip')};
+  --mtc-background-disabled-list-option: #{_get-background-color('disabled-list-option')};
+  --mtc-background-tooltip: #{_get-background-color('tooltip')};
+
+  --mtc-foreground-base: hsla(0, 0%, #{mtc.theme-component(0, 100, 1%)}, 10%);
+  --mtc-foreground-divider: #{_get-foreground-color('divider')};
+  --mtc-foreground-dividers: #{_get-foreground-color('dividers')};
+  --mtc-foreground-disabled: #{_get-foreground-color('disabled')};
+  --mtc-foreground-disabled-button: #{_get-foreground-color('disabled-button')};
+  --mtc-foreground-disabled-text: #{_get-foreground-color('disabled-text')};
+  --mtc-foreground-elevation: hsla(0, 0%, 0%, 26%);
+  --mtc-foreground-hint-text: #{_get-foreground-color('hint-text')};
+  --mtc-foreground-secondary-text: #{_get-foreground-color('secondary-text')};
+  --mtc-foreground-icon: #{_get-foreground-color('icon')};
+  --mtc-foreground-icons: #{_get-foreground-color('icons')};
+  --mtc-foreground-text: #{_get-foreground-color('text')};
+  --mtc-foreground-slider-min: #{_get-foreground-color('slider-min')};
+  --mtc-foreground-slider-off: #{_get-foreground-color('slider-off')};
+  --mtc-foreground-slider-off-active: #{_get-foreground-color('slider-off-active')};
+}
+
+/// Creates base colors CSS Variables for angular material theme.
+///
+/// :root {
+///   @include ngx-mtc.theme-base();
+/// }
+///
+/// IMPORTANT: --is-dark-theme: 1; (or 0) property!
+@mixin theme-base() {
+  @include ngx-mtc-theme-base();
+}
+
+/// @deprecated
+@function ngx-mtc-custom-theme($primary, $accent, $warn) {
+  @return (
+          primary: $primary,
+          accent: $accent,
+          warn: $warn,
+          is-dark: false, // not used
+          foreground: (
+                  base: var(--mtc-foreground-base),
+                  divider: var(--mtc-foreground-divider),
+                  dividers: var(--mtc-foreground-dividers),
+                  disabled: var(--mtc-foreground-disabled),
+                  disabled-button: var(--mtc-foreground-disabled-button),
+                  disabled-text: var(--mtc-foreground-disabled-text),
+                  elevation: var(--mtc-foreground-elevation),
+                  hint-text: var(--mtc-foreground-hint-text),
+                  secondary-text: var(--mtc-foreground-secondary-text),
+                  icon: var(--mtc-foreground-icon),
+                  icons: var(--mtc-foreground-icons),
+                  text: var(--mtc-foreground-text),
+                  slider-min: var(--mtc-foreground-slider-min),
+                  slider-off: var(--mtc-foreground-slider-off),
+                  slider-off-active: var(--mtc-foreground-slider-off-active),
+          ),
+          background: (
+                  status-bar: var(--mtc-background-status-bar),
+                  app-bar: var(--mtc-background-app-bar),
+                  background: var(--mtc-background-background),
+                  hover: var(--mtc-background-hover),
+                  card: var(--mtc-background-card),
+                  dialog: var(--mtc-background-dialog),
+                  disabled-button: var(--mtc-background-disabled-button),
+                  raised-button: var(--mtc-background-raised-button),
+                  focused-button: var(--mtc-background-focused-button),
+                  selected-button: var(--mtc-background-selected-button),
+                  selected-disabled-button: var(--mtc-background-selected-disabled-button),
+                  disabled-button-toggle: var(--mtc-background-disabled-button-toggle),
+                  unselected-chip: var(--mtc-background-unselected-chip),
+                  disabled-list-option: var(--mtc-background-disabled-list-option),
+                  tooltip: var(--mtc-background-tooltip),
+          )
+  );
+}
+
+/// Set base colors CSS Variables into angular material
+///
+/// $theme: ngx-mtc.custom-theme(
+///    mat.define-palette($primary-map),
+///    mat.define-palette($accent-map),
+///    mat.define-palette($warn-map)
+/// )
+///
+/// @param {mat-palette} $primary primary palette
+/// @param {mat-palette} $accent accent palette
+/// @param {mat-palette} $warn warn palette
+/// @return {mat-theme} theme for angular-material-theme function. `@include angular-material-theme(mtc-custom-theme(...));`
+@function custom-theme($primary, $accent, $warn) {
+  @return ngx-mtc-custom-theme($primary, $accent, $warn);
+}
+
+/// @deprecated
+@mixin ngx-mtc-update-theme($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc.update-theme($theme-name, $color, $contrast-threshold)
+}
+
+/// Update theme
+///
+/// :root {
+///   --is-dark-theme: 1;
+///   @include ngx-mtc.update-theme('primary', #142148, 45%);
+/// }
+///
+@mixin update-theme($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc.update-theme($theme-name, $color, $contrast-threshold);
+}
+
+/// Returns color (variable). Example: mtc-color('primary', 400, 95%)
+///
+/// background: #{ngx-mtc.color('primary', 400, 90%)}
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {string} $index: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700];
+/// @param {number} $alpha (default: 100%)
+/// @returns hsla(...color)
+@function color($theme-name, $index: 500, $alpha: 100%) {
+  @return mtc.color($theme-name, $index, $alpha);
+}
+
+/// Returns contrast color (variable). Example: mtc-color-contrast('primary', 400)
+///
+/// color: #{ngx-mtc.color-contrast('primary', 400)}
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {string} $index: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700];
+/// @returns black or white
+@function color-contrast($theme-name, $index: 500) {
+  @return mtc.color-contrast($theme-name, $index);
+}
+
+/// Create color-construction for transition light-dark. Use --is-dark-theme [0..1] variable to change color
+///
+/// background: #{ngx-mtc.theme-color(#f00, #0f0)} /* #f00 in light theme, #0f0 in dark theme */
+///
+/// @param $light {color} - light-theme color
+/// @param $dark {color} - dark-theme color
+/// @return {color} CSS color hsla(...)
+@function theme-color($light, $dark, $dark-theme-variable: --is-dark-theme) {
+  @return mtc.theme-color($light, $dark, $dark-theme-variable);
+}
+
+// FIX: "Could not find Angular Material core theme. Most Material components may not work as expected."
+//.mat-theme-loaded-marker {
+//  display: none;
+//}

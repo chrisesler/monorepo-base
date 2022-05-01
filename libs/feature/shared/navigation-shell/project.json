@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/feature/shared/navigation-shell",
+    "sourceRoot": "libs/feature/shared/navigation-shell/src",
+    "prefix": "cesler",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/feature/shared/navigation-shell"],
+            "options": {
+                "jestConfig": "libs/feature/shared/navigation-shell/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/feature/shared/navigation-shell/src/**/*.ts",
+                    "libs/feature/shared/navigation-shell/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": ["scope:shared", "feature:shared"]
+}

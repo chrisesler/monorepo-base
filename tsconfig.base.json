@@ -1,20 +1,56 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {}
-  },
-  "exclude": ["node_modules", "tmp"]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": ["es2017", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@cesler/core": ["libs/core/src/index.ts"],
+            "@cesler/feature/lazy/admin": [
+                "libs/feature/lazy/admin/src/index.ts"
+            ],
+            "@cesler/feature/lazy/authentication": [
+                "libs/feature/lazy/authentication/src/index.ts"
+            ],
+            "@cesler/feature/lazy/examples": [
+                "libs/feature/lazy/examples/src/index.ts"
+            ],
+            "@cesler/feature/lazy/feature-router": [
+                "libs/feature/lazy/feature-router/src/index.ts"
+            ],
+            "@cesler/feature/lazy/home": [
+                "libs/feature/lazy/home/src/index.ts"
+            ],
+            "@cesler/feature/shared/footer": [
+                "libs/feature/shared/footer/src/index.ts"
+            ],
+            "@cesler/feature/shared/menu": [
+                "libs/feature/shared/menu/src/index.ts"
+            ],
+            "@cesler/feature/shared/navbar": [
+                "libs/feature/shared/navbar/src/index.ts"
+            ],
+            "@cesler/feature/shared/navigation-shell": [
+                "libs/feature/shared/navigation-shell/src/index.ts"
+            ],
+            "@cesler/feature/shared/theming": [
+                "libs/feature/shared/theming/src/index.ts"
+            ],
+            "@cesler/material": ["libs/material/src/index.ts"],
+            "@cesler/shared": ["libs/shared/src/index.ts"],
+            "@cesler/ui": ["libs/ui/src/index.ts"],
+            "@cesler/utils": ["libs/utils/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
 }

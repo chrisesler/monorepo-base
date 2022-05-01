@@ -1,0 +1,6 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use '@cesler/ui/themes/themes/default';
+
+//@include themes.dark-theme-init();
+@include default.light-theme();

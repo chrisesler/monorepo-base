@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use '../../css-variables';
+
+@mixin theme() {
+    $theme-palette-map: theme-palette-map();
+    @include css-variables.root-template($theme-palette-map);
+}
+
+@function theme-palette-map() {
+    $theme-info: (
+        'theme-name': 'default',
+        'is-dark-theme': 1
+    );
+
+    $theme-maps: map.merge(theme-map(),theme-variant-map());
+
+    $palette: map.merge($theme-info, $theme-maps);
+
+    @return $palette;
+}
+
+@function theme-map() {
+    $theme: (
+        'primary': mat.$blue-grey-palette,
+        'accent': mat.$amber-palette,
+        'warn': mat.$deep-orange-palette
+    );
+    @return $theme;
+}
+
+@function theme-variant-map() {
+    $variants: (
+        'success': mat.$light-green-palette,
+        'info': mat.$light-blue-palette
+    );
+    @return $variants;
+}

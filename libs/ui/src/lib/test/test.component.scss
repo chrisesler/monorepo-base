@@ -1,0 +1,6 @@
+@use '@cesler/ui/styles';
+
+.testClass {
+    background: styles.$testColor;
+    color: white;
+}

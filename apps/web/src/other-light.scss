@@ -1,0 +1,4 @@
+@use '@cesler/ui/themes/themes/other';
+
+//@include themes.light-theme-init();
+@include other.light-theme();

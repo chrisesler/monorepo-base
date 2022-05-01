@@ -1,0 +1,38 @@
+
+@use 'sass:map';
+@use 'sass:meta';
+@use '@angular/material' as mat;
+@use '../material-theme-creator' as ngx-mtc;
+
+@use './maps' as var-maps;
+
+@function palette-mapping($var-map) {
+    $palette-map: ();
+
+    @each $key, $map in $var-map {
+        $palette-map: map.set($palette-map, $key, mat.define-palette($map));
+    }
+
+    @return $palette-map;
+}
+
+@function theme() {
+    $mapping: palette-mapping(var-maps.primaries());
+
+    $theme: ngx-mtc.custom-theme(
+        map.get($mapping, 'primary'),
+        map.get($mapping, 'accent'),
+        map.get($mapping, 'warn')
+    );
+
+    @return $theme;
+}
+
+@function variants() {
+    $var-map: palette-mapping(var-maps.variants());
+
+    @return $var-map;
+}
+
+
+

@@ -1,0 +1,4 @@
+@use '@cesler/ui/themes/themes/other';
+
+//@include themes.dark-theme-init();
+@include other.dark-theme();

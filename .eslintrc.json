@@ -1,35 +1,85 @@
 {
-  "root": true,
-  "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
-          "error",
-          {
-            "enforceBuildableLibDependency": true,
-            "allow": [],
-            "depConstraints": [
-              {
-                "sourceTag": "*",
-                "onlyDependOnLibsWithTags": ["*"]
-              }
-            ]
-          }
-        ]
-      }
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2015,
+        "sourceType": "module",
+        "project": "./tsconfig.*?.json"
     },
-    {
-      "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
-      "rules": {}
-    }
-  ]
+    "ignorePatterns": ["**/*"],
+    "plugins": ["@typescript-eslint", "@nrwl/nx"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/@typescript-eslint"
+    ],
+    "overrides": [
+        {
+            "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+            "rules": {
+                "@nrwl/nx/enforce-module-boundaries": [
+                    "error",
+                    {
+                        "enforceBuildableLibDependency": true,
+                        "allow": [],
+                        "depConstraints": [
+                            {
+                                "sourceTag": "scope:app",
+                                "onlyDependOnLibsWithTags": [
+                                    "scope:app",
+                                    "scope:shared",
+                                    "feature:shared"
+                                ]
+                            },
+                            {
+                                "sourceTag": "scope:shared",
+                                "onlyDependOnLibsWithTags": ["scope:shared"]
+                            },
+                            {
+                                "sourceTag": "feature:lazy",
+                                "onlyDependOnLibsWithTags": [
+                                    "scope:shared",
+                                    "feature:shared",
+                                    "feature:api"
+                                ]
+                            },
+                            {
+                                "sourceTag": "feature:api",
+                                "onlyDependOnLibsWithTags": [
+                                    "feature:api",
+                                    "scope:shared"
+                                ]
+                            },
+                            {
+                                "sourceTag": "feature:shared",
+                                "onlyDependOnLibsWithTags": [
+                                    "scope:shared",
+                                    "feature:api"
+                                ]
+                            },
+                            {
+                                "sourceTag": "type:ui",
+                                "onlyDependOnLibsWithTags": [
+                                    "type:ui",
+                                    "type:util"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["*.ts", "*.tsx"],
+            "extends": ["plugin:@nrwl/nx/typescript"],
+            "rules": {}
+        },
+        {
+            "files": ["*.js", "*.jsx"],
+            "extends": ["plugin:@nrwl/nx/javascript"],
+            "rules": {}
+        }
+    ]
 }

@@ -1,0 +1,29 @@
+@use 'sass:map';
+@use '../material-theme-creator' as ngx-mtc;
+
+@mixin template($theme-palette-map) {
+    :root {
+        @include variables($theme-palette-map);
+    }
+}
+
+@mixin variables($theme-palette-map) {
+    @each $palette-key, $palette-map in $theme-palette-map {
+
+        @if $palette-key == 'theme-name' {
+            // output theme name if needed
+            --theme-name: '#{$palette-map}';
+        } @else if $palette-key == 'is-dark-theme' {
+            // whether is dark theme
+            --is-dark-theme: #{$palette-map};
+
+            // base values (background/foreground)
+            @include ngx-mtc.theme-base();
+        } @else {
+            @include ngx-mtc.create-variables-from-map(
+                $palette-key,
+                $palette-map
+            );
+        }
+    }
+}

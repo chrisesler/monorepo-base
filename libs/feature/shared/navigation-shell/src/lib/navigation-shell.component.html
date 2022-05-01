@@ -1,0 +1,21 @@
+<!--<mat-toolbar color="primary">
+    <span>My App</span>
+    <span class="fill-space"></span>
+
+    <button
+        mat-icon-button
+        (click)="toggleDarkTheme()"
+        class="theme-toggle"
+        aria-label="Toggle Dark Theme"
+    >
+        <mat-icon>{{ isDark ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+
+</mat-toolbar>-->
+<app-navbar></app-navbar>
+
+<!-- TRANSCLUSION -->
+<div class="content-wrap">
+    <ng-content></ng-content>
+</div>
+<app-footer></app-footer>

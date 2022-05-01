@@ -1,0 +1,26 @@
+{
+    "projectType": "library",
+    "root": "libs/feature/lazy/admin",
+    "sourceRoot": "libs/feature/lazy/admin/src",
+    "prefix": "cesler",
+    "targets": {
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["coverage/libs/feature/lazy/admin"],
+            "options": {
+                "jestConfig": "libs/feature/lazy/admin/jest.config.js",
+                "passWithNoTests": true
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "options": {
+                "lintFilePatterns": [
+                    "libs/feature/lazy/admin/src/**/*.ts",
+                    "libs/feature/lazy/admin/src/**/*.html"
+                ]
+            }
+        }
+    },
+    "tags": ["feature:lazy"]
+}

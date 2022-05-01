@@ -1,0 +1,251 @@
+/// *
+///
+///   Material Theme Creator
+///   Version: 3.1.4
+///
+///   Author: Artik Man [mail@artik.me, github.com/Artik-Man]
+///   Docs: https://artik-man.github.io/material-theme-creator/
+///   GitHub: https://github.com/Artik-Man/material-theme-creator
+///
+/// */
+
+@use "sass:math";
+
+/// Remove the unit of a number
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unit-less number
+@function strip-unit($number) {
+  @return math.div($number, $number * 0 + 1);
+}
+
+/// @deprecated
+@mixin mtc-init() {
+  :root {
+    --mtc-h-A100: 1;
+    --mtc-h-A200: 1;
+    --mtc-h-A400: 1;
+    --mtc-h-A700: 1.01;
+
+    --mtc-s-50: 0.91;
+    --mtc-s-100: 0.98;
+    --mtc-s-200: 0.96;
+    --mtc-s-300: 0.95;
+    --mtc-s-400: 0.96;
+    --mtc-s-600: 1;
+    --mtc-s-700: 0.99;
+    --mtc-s-800: 0.89;
+    --mtc-s-900: 0.86;
+    --mtc-s-A100: 0.89;
+    --mtc-s-A200: 0.98;
+    --mtc-s-A400: 0.97;
+    --mtc-s-A700: 0.95;
+
+    --mtc-l-50: 0.12;
+    --mtc-l-100: 0.3;
+    --mtc-l-200: 0.5;
+    --mtc-l-300: 0.7;
+    --mtc-l-400: 0.86;
+    --mtc-l-600: 0.87;
+    --mtc-l-700: 0.66;
+    --mtc-l-800: 0.45;
+    --mtc-l-900: 0.16;
+    --mtc-l-A100: 0.76;
+    --mtc-l-A200: 0.64;
+    --mtc-l-A400: 0.49;
+    --mtc-l-A700: 0.44;
+
+    --mtc-light-h: 0;
+    --mtc-light-s: 0;
+    --mtc-light-l: 100;
+  }
+}
+
+/// Creates CSS Variables used in the "create-variables-from-color" mixin
+///
+/// @include mtc.init()
+///
+@mixin init() {
+  @include mtc-init();
+}
+
+/// @deprecated
+@mixin mtc-create-variables-from-color($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc-update-theme($theme-name, $color, $contrast-threshold);
+
+  --#{$theme-name}: hsla(var(--#{$theme-name}-h), calc(var(--#{$theme-name}-s) * 1%), calc(var(--#{$theme-name}-l) * 1%), #{alpha($color)});
+
+  $theme-h: '--' + $theme-name + '-h';
+  $theme-s: '--' + $theme-name + '-s';
+  $theme-l: '--' + $theme-name + '-l';
+
+  $arr_50_400: 50, 100, 200, 300, 400;
+  @for $i from 1 through 5 {
+    $index: nth($arr_50_400, $i);
+    --#{$theme-name}-#{$index}-h: var(#{$theme-h});
+    --#{$theme-name}-#{$index}-s: calc(((var(#{$theme-s}) - var(--mtc-light-s)) * var(#{'--mtc-s-' + $index}) + var(--mtc-light-s)) * 1%);
+    --#{$theme-name}-#{$index}-l: calc(((var(#{$theme-l}) - var(--mtc-light-l)) * var(#{'--mtc-l-' + $index}) + var(--mtc-light-l)) * 1%);
+    --#{$theme-name}-#{$index}: hsl(var(--#{$theme-name}-#{$index}-h), var(--#{$theme-name}-#{$index}-s), var(--#{$theme-name}-#{$index}-l));
+    --#{$theme-name}-#{$index}-contrast: hsl(0, 0%, calc(((((1 - var(#{'--mtc-l-' + $index})) * 100 + var(#{'--mtc-l-' + $index}) * var(#{$theme-l})) * 1%) - var(#{'--' + $theme-name + '-contrast-threshold'}, 50%)) * (-100)));
+  }
+
+  --#{$theme-name+ '-500-h'}: var(#{$theme-h});
+  --#{$theme-name+ '-500-s'}: calc(var(#{$theme-s}) * 1%);
+  --#{$theme-name+ '-500-l'}: calc(var(#{$theme-l}) * 1%);
+
+  --#{$theme-name + '-500'}: var(--#{$theme-name});
+  --#{$theme-name + '-500-contrast'}: hsl(0, 0%, calc(((var(#{$theme-l}) * 1%) - var(#{'--' + $theme-name + '-contrast-threshold'}, 50%)) * (-100)));
+
+  $arr_600_900: 600, 700, 800, 900;
+  @for $i from 1 through 4 {
+    $index: nth($arr_600_900, $i);
+    --#{$theme-name}-#{$index}-h: var(#{$theme-h});
+    --#{$theme-name}-#{$index}-s: calc(((1 - var(#{'--mtc-s-' + $index})) * 100 + var(#{'--mtc-s-' + $index}) * var(#{$theme-s})) * 1%);
+    --#{$theme-name}-#{$index}-l: calc(((1 - var(#{'--mtc-l-' + $index})) * var(#{$theme-l}) * var(#{$theme-l}) / 100 + var(#{'--mtc-l-' + $index}) * var(#{$theme-l})) * 1%);
+    --#{$theme-name}-#{$index}: hsl(var(--#{$theme-name}-#{$index}-h), var(--#{$theme-name}-#{$index}-s), var(--#{$theme-name}-#{$index}-l));
+    --#{$theme-name}-#{$index}-contrast: hsl(0, 0%, calc(((((1 - var(#{'--mtc-l-' + $index})) * var(#{$theme-l}) * var(#{$theme-l}) / 100 + var(#{'--mtc-l-' + $index}) * var(#{$theme-l})) * 1%) - var(#{'--' + $theme-name + '-contrast-threshold'}, 50%)) * (-100)));
+  }
+
+  $arr_A00_A700: A100, A200, A400, A700;
+  @for $i from 1 through 4 {
+    $index: nth($arr_A00_A700, $i);
+    --#{$theme-name}-#{$index}-h: calc(var(#{$theme-h}) * var(#{'--mtc-h-' + $index}));
+    --#{$theme-name}-#{$index}-s: calc(var(#{'--mtc-s-' + $index}) * 100%);
+    --#{$theme-name}-#{$index}-l: calc(var(#{'--mtc-l-' + $index}) * 100%);
+    --#{$theme-name}-#{$index}: hsl(var(--#{$theme-name}-#{$index}-h), var(--#{$theme-name}-#{$index}-s), var(--#{$theme-name}-#{$index}-l));
+    --#{$theme-name}-#{$index}-contrast: hsl(0, 0%, calc((var(#{'--mtc-l-' + $index}) * 100% - var(#{'--' + $theme-name + '-contrast-threshold'}, 50%)) * (-100)));
+  }
+}
+
+/// Creates CSS Custom Properties for mat-palette from one color
+///
+/// mtc.create-variables-from-color('primary', #ff0000, 53%)
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {color} $color CSS Color (#hex/rgb,hsl);
+/// @param {percent} $contrast-threshold: 0%..100% (default: 50%);
+///
+/// @return CSS Custom Properties:
+///  --primary: hsl(...);
+///  --primary-50: hsl(...);
+///  --primary-50-contrast: hsl(...);
+///  --primary-100: hsl(...);
+///  --primary-100-contrast: hsl(...);
+///  ...
+///  --primary-A700: hsl(...);
+///  --primary-A700-contrast: hsl(...);
+@mixin create-variables-from-color($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc-create-variables-from-color($theme-name, $color, $contrast-threshold);
+}
+
+/// @deprecated
+@mixin mtc-update-theme($theme-name, $color, $contrast-threshold: 50%) {
+  --#{$theme-name}-h: #{strip-unit(hue($color))};
+  --#{$theme-name}-s: #{strip-unit(saturation($color))};
+  --#{$theme-name}-l: #{strip-unit(lightness($color))};
+  --#{$theme-name}-contrast-threshold: #{$contrast-threshold};
+}
+
+/// Returns CSS Custom Properties: Hue, Lightness, Saturation for CSS Color and contrast threshold for this theme
+///
+/// @include mtc.update-theme('primary', #ff0000, 53%)
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {color} $color CSS Color (#hex/rgb/hsl);
+/// @param {number} $contrast-threshold - contrast threshold for theme
+/// @return CSS Custom Properties:
+///  --primary-h: 212;
+///  --primary-s: 95;
+///  --primary-l: 80;
+///  --primary-contrast-threshold: 50%;
+@mixin update-theme($theme-name, $color, $contrast-threshold: 50%) {
+  @include mtc-update-theme($theme-name, $color, $contrast-threshold);
+}
+
+/// @deprecated
+@function mtc-color($theme-name, $index: 500, $alpha: 100%) {
+  @return hsla(var(--#{$theme-name}-#{$index}-h), var(--#{$theme-name}-#{$index}-s), var(--#{$theme-name}-#{$index}-l), #{$alpha});
+}
+
+/// Returns color (variable). Example: mtc-color('primary', 400, 95%)
+///
+/// background: mtc.color('primary', 400, 90%)
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {string} $index: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700];
+/// @param {number} $alpha (default: 100%)
+/// @returns hsla(...color)
+@function color($theme-name, $index: 500, $alpha: 100%) {
+  @return mtc-color($theme-name, $index, $alpha);
+}
+
+/// @deprecated
+@function mtc-color-contrast($theme-name, $index: 500) {
+  @return var(--#{$theme-name}-#{$index}-contrast);
+}
+
+/// Returns contrast color (variable). Example: mtc-color-contrast('primary', 400)
+///
+/// color: mtc.color-contrast('primary', 400)
+///
+/// @param {string} $theme-name (example: 'primary');
+/// @param {string} $index: [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400, A700];
+/// @returns black or white
+@function color-contrast($theme-name, $index: 500) {
+  @return mtc-color-contrast($theme-name, $index);
+}
+
+/// @deprecated
+@function mtc-theme-component($min:0, $max:100, $unit: 1, $dark-theme-variable: --is-dark-theme) {
+  // L0 -> D100: calc((var(--is-dark-theme) * (max - min) + min) * 1%)
+  // L100 -> D0: calc(((1 - var(--is-dark-theme)) * (max - min) + min) * 1%)
+  $base: var(#{$dark-theme-variable});
+
+  $min: strip-unit($min);
+  $max: strip-unit($max);
+
+  @if ($min > $max) {
+    $temp: $min;
+    $min: $max;
+    $max: $temp;
+    $base: calc(1 - var(#{$dark-theme-variable}));
+  }
+  @return calc((#{$base} * (#{$max} - #{$min}) + #{$min}) * #{$unit});
+}
+
+/// Create diapason for transition light-dark. Use --is-dark-theme [0..1] variable to change number inside diapason
+///
+/// background: hsl(
+//              123deg,
+//              85%,
+//              #{mtc.theme-component(34, 72, 1%)}
+//            );
+///
+/// @param {number} $min - from
+/// @param {number} $max - to
+/// @param {any} $unit - 1%, 1deg, 1px, ...
+/// @param {var} $dark-theme-variable
+/// @return {calc(...)} diapason
+@function theme-component($min:0, $max:100, $unit: 1, $dark-theme-variable: --is-dark-theme) {
+  @return mtc-theme-component($min, $max, $unit, $dark-theme-variable);
+}
+
+/// @deprecated
+@function mtc-theme-color($light, $dark, $dark-theme-variable: --is-dark-theme) {
+  @return hsla(
+                  #{mtc-theme-component(hue($light), hue($dark), 1deg, $dark-theme-variable)},
+                  #{mtc-theme-component(saturation($light), saturation($dark), 1%, $dark-theme-variable)},
+                  #{mtc-theme-component(lightness($light), lightness($dark), 1%, $dark-theme-variable)},
+                  #{mtc-theme-component(opacity($light), opacity($dark), 100%, $dark-theme-variable)}
+  )
+}
+
+/// Create color-construction for transition light-dark. Use --is-dark-theme [0..1] variable to change color
+///
+/// background: mtc.theme-color(#f00, #0f0) /* #f00 in light theme, #0f0 in dark theme */
+///
+/// @param $light {color} - light-theme color
+/// @param $dark {color} - dark-theme color
+/// @return {color} CSS color hsla(...)
+@function theme-color($light, $dark, $dark-theme-variable: --is-dark-theme) {
+  @return mtc-theme-color($light, $dark, $dark-theme-variable);
+}

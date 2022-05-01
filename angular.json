@@ -1,7 +1,22 @@
 {
-  "version": 2,
-  "projects": {
-    "web": "apps/web",
-    "web-e2e": "apps/web-e2e"
-  }
+    "version": 2,
+    "projects": {
+        "core": "libs/core",
+        "feature-lazy-admin": "libs/feature/lazy/admin",
+        "feature-lazy-authentication": "libs/feature/lazy/authentication",
+        "feature-lazy-examples": "libs/feature/lazy/examples",
+        "feature-lazy-feature-router": "libs/feature/lazy/feature-router",
+        "feature-lazy-home": "libs/feature/lazy/home",
+        "feature-shared-app-footer": "libs/feature/shared/footer",
+        "feature-shared-app-menu": "libs/feature/shared/menu",
+        "feature-shared-app-navbar": "libs/feature/shared/navbar",
+        "feature-shared-navigation-shell": "libs/feature/shared/navigation-shell",
+        "feature-shared-theming": "libs/feature/shared/theming",
+        "material": "libs/material",
+        "shared": "libs/shared",
+        "ui": "libs/ui",
+        "utils": "libs/utils",
+        "web": "apps/web",
+        "web-e2e": "apps/web-e2e"
+    }
 }

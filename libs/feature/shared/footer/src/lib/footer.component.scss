@@ -1,0 +1,10 @@
+@use '@cesler/ui/styles';
+@use '@angular/material' as mat;
+
+:host {
+  display: block;
+  padding: 20px;
+
+  background: styles.$testColor;
+  color: white;
+}

@@ -1,0 +1,6 @@
+
+@use './navbar/src/lib/navbar.theme' as navbar;
+
+@mixin theme($theme, $typography-config, $variants) {
+    @include navbar.theme($theme, $typography-config, $variants);
+}
